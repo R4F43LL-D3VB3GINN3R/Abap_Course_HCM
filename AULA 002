@@ -1,1 +1,47 @@
+#----------------------------------------------------------------------------------------------------------------------#
+                                              Important Transactions
+#----------------------------------------------------------------------------------------------------------------------#
 
+[PA10 - Personnel File]
+-----------------------
+This transaction provides a view of all infotypes in which the employee is registered. 
+It allows a comprehensive view of the employee's personnel file, consolidating essential information in one place.
+
+PA70 - Fast Entry
+-----------------
+Enables the efficient registration of multiple employees in the same infotype. 
+For example, it is useful for entering information in infotypes 14 and 15, related to additional payments and attire, notifications, respectively.
+
+PA40 - Employee Actions
+-----------------------
+In this transaction, specific actions related to a particular employee are created. 
+This process is linked to infotype 0000, which covers general employee information.
+
+#----------------------------------------------------------------------------------------------------------------------#
+                         (Post Scriptum) - Automatic Registration of Payroll Status Infotype
+#----------------------------------------------------------------------------------------------------------------------#
+When an employee is hired, the Payroll Status infotype is automatically registered in the background. 
+This streamlines the onboarding process by automatically recording the employee's payroll status.
+
+#----------------------------------------------------------------------------------------------------------------------#
+                                                    Constraints
+#----------------------------------------------------------------------------------------------------------------------#
+Constraints on infotype registrations, with the most well-known being levels 1, 2, and 3:
+
+Level 1
+-------
+Constraints that limit the alteration of data over time when it becomes illogical to make changes. 
+For example, modifying the country of birth while the individual is alive.
+
+Level 2
+-------
+Allows changes in the record but with a time expiration, such as a change in a life insurance policy.
+
+Level 3
+-------
+The record may or may not exist, and if it exists, there may be more than one instance of that record.
+
+
+These constraints, categorized at different levels, offer precise control over changes in employee data over time, 
+ensuring consistency and logic in information records.
+"----------------------------------------------------------------------------------------------------------------------#

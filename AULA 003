@@ -1,0 +1,34 @@
+1 - Entrar na Transação PA30
+2 - Escolher um Funcionário
+3 - Escolher o Infotype 23 (Cadastrar empregos anteriores)
+4 - Verificando que este Infotype não está cadastrado temos de criar um novo cadastro.
+5 - Selecionar Data de Início e Fim.
+6 - Preencher os campos.
+7 - Salvar Alterações.
+8 - Verificar se o Infotype foi cadastrado.
+9 - A empresa pede que seja inserido um campo adicional no Infotype (Motivo de Saída).
+10 - Entrar na Transação PM01.
+11 - Inserir o número do Infotype no campo.
+12 - Clicar na aba SingleScm - Enhance Infotype.
+13 - Escolher um país.
+14 - Verificar se o Customer Include foi marcado.
+15 - Clicar em Generate Objects.
+16 - A Include inserida serve para gerarmos mais campos em um Infotype existente.
+17 - Criar um nome para a Short Description Ex: Details Infotype 0023.
+18 - Criar o nome do campo Ex: Reason for Living.
+19 - Definir o tipo do campo Ex: char100.
+20 - Salvar Alterações.
+21 - Ativar Infotype.
+22 - Ir na Estrutura P0023 na Transaction SE11 e verificar se o campo foi inserido.
+23 - Ir na Transação PM01.
+24 - Clicar na aba SingleScm - Enhance Infotype.
+25 - Selecionar Include Screen.
+26 - Clicar em Edit.
+27 - Selecionar Layout Editor.
+28 - Clicar em Change.
+29 - Alterar o nome do campo na Element List.
+30 - Salvar e Ativar Alterações.
+31 - Clicar em Assign Enhancemente.
+32 - Clicar em Change.
+33 - Ir para a Transaction PA30.
+34 - Ir para o Infotype 23.

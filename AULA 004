@@ -1,0 +1,120 @@
+*&---------------------------------------------------------------------*
+*& Report Y_ABAPHCM_01
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT Y_ABAPHCM_01.
+
+"A primeira coisa que devemos estabelecer num Report HCM é mencionar qual infotype deveremos usar."
+"Ao mencionar o Infotype, uma estrutura é criada.
+"Infotype relacionado aos dados mestres de um funcionário."
+INFOTYPES: 0001.
+
+"Declara qual tabela será usada no programa.
+"Tabela que armazena o número pessoal de um funcionário no sistema.
+TABLES: pernr.
+
+"Início de Lógica Principal."
+START-OF-SELECTION.
+
+"Recupera o número pessoal do funcionário."
+"Preenche a estrutura P0001.
+GET pernr.
+
+"Disponibiliza os dados entre os campos da estrutura."
+*provide * from p0001 BETWEEN pn-begda and pn-endda.
+*
+*  "Formata a saída."
+*  WRITE:/ p0001-pernr,
+*          p0001-stell,
+*          p0001-begda.
+*
+*endprovide.
+
+"Macro para recuperar o último registro de um Infotype.
+rp_provide_from_last p0001 space pn-begda pn-endda.
+
+  "Se houveram dados achados na macro...
+  IF pnp-sw-found = 1.
+    "Formata a saída."
+    WRITE: / pernr-pernr,
+             p0001-stell,
+             p0001-begda.
+  "Se nenhum dado for achado..."
+  ELSE.
+    "Continue."
+    REJECT.
+  ENDIF.
+
+//---------------------------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------------
+
+VISUALIZAÇÃO DE UMA TABELA LÓGICA
+
+1 - Acesse a Transação SE36 (Acesso à Tabelas Lógicas).
+2 - Acesse a Tabela PNP (Tabela para Recuperar Informações do Submódulo PA).
+3 - Selecione o Subobject - Database Program.
+4 - Selecione em modo Display.
+
+ou 
+
+2 - Acesse a Tabela PNPCE (Versão melhorada da PNP).
+3 - Selecione o Subobject - Database Program.
+4 - Selecione em modo Display.
+
+ou 
+
+2 - Acesse a Tabela PCH.
+3 - Selecione o Subobject - Database Program.
+4 - Selecione em modo Display.
+
+ou 
+
+2 - Acesse a Tabela PAP (Tabela não muito usada).
+3 - Selecione o Subobject - Database Program.
+4 - Selecione em modo Display.
+
+//-------------------------------------------------------------------------------
+
+COMO USAR UMA TABELA LÓGICA.
+
+Visualizando um Report Program HCM:
+
+1 - Acesse a Transação SE38.
+2 - Se digitar no campo RP* podemos visualizar Report Programs relacionados ao Módulo HCM.
+3 - Seleciona RPBWDRD2.
+4 - Seleciona o Subobject Display.
+
+Utilizando dados de uma Tabela Lógica:
+
+1 - Seleciona o Subobject Attributes.
+2 - Selecione em modo Display.
+
+//-------------------------------------------------------------------------------
+
+CRIANDO UM REPORT CATEGORY.
+
+1 - Acesse a Transação SE38.
+2 - Crie um Report Program.
+3 - Depois do programa criado, vá novamente aos Attributes.
+4 - Selecione o botão HR Report Category para criar uma tela.
+5 - Selecione o Mater Data ___00001.
+6 - Selecione Create.
+7 - Selecione Save.
+8 - Salve e Execute o Programa na Transação SE38.
+9 - Procure um Personal Number e execute o programa.
+
+//-------------------------------------------------------------------------------
+
+CONHECENDO CONCEITOS DE MACRO.
+
+1 - Acesse a Transação SE16N.
+2 - Selecione a Tabela TRMAC.
+3 - Insira break no campo Fr.Value.
+
+Utilizando Macros em Programas HCM:
+
+1 - Ver programa.
+
+//-------------------------------------------------------------------------------

@@ -1,0 +1,63 @@
+🚀✨ Implementando BAdIs no SAP HCM! ✨🚀
+
+As Business Add-Ins (BAdIs) são uma poderosa ferramenta de extensibilidade no SAP HCM. Elas permitem adicionar ou modificar a lógica de negócios padrão sem modificar o código-fonte original.
+
+🔍 Visualizando BAdIs:
+1️⃣ Acesse a transação SE84.
+2️⃣ Vá para Enhancements.
+3️⃣ Selecione Business Add-Ins.
+4️⃣ Escolha Definitions.
+5️⃣ Digite o nome da BAdI, como HRPAD00INFTY.
+6️⃣ Execute o programa.
+7️⃣ Clique duas vezes no nome da BAdI.
+8️⃣ Vá para a aba Interface para ver os métodos internos.
+
+✨ Implementando BAdIs:
+1️⃣ Acesse a transação SE19.
+2️⃣ Na caixa Create Implementation, escolha Classic BAdI.
+3️⃣ Insira o nome da BAdI, como HRPAD00INFTY.
+4️⃣ Clique em Criar.
+5️⃣ Nomeie sua implementação.
+6️⃣ Insira uma descrição.
+7️⃣ Ative a implementação.
+
+✨ Implementando uma BAdI para personalização do infotype 0015 no SAP HCM! ✨
+
+Neste exemplo, criamos uma implementação para a BAdI HRPAD00INFTY no SAP HCM. Esta BAdI permite a execução de lógica personalizada antes da exibição de um infotype. No nosso caso, estamos focando no infotype 0015.
+
+1️⃣ Verificação do Infotype 0015: Primeiro, verificamos se o infotype atual é o 0015.
+
+2️⃣ Declaração de Campos e Variáveis: Em seguida, declaramos um campo-símbolo para armazenar a data de início (begda) do infotype 0015 e algumas variáveis locais para manipulação.
+
+3️⃣ Associação do Campo-símbolo: Utilizamos ASSIGN para associar dinamicamente o campo de data de início (begda) do infotype 0015 ao campo-símbolo.
+
+4️⃣ Obtenção da Data de Início do Período de Folha de Pagamento: Chamamos a função HR_MX_GET_PAYROLL_PERIOD para buscar a data de início do período de folha de pagamento a partir da área de folha de pagamento do funcionário.
+
+5️⃣ Atribuição da Data ao Campo-símbolo: Se a função for bem-sucedida, atribuímos a data obtida ao campo-símbolo.
+
+Este código permite a personalização dinâmica da data de início do infotype 0015 com base na lógica específica de negócios de sua organização. 
+
+method IF_EX_HRPAD00INFTY~BEFORE_OUTPUT.
+
+  IF innnn-infty = '0015'.                          "Se o infotype for 0015..."
+    FIELD-SYMBOLS: <fs_begda> TYPE sy-datum.        "Cria um espaço na memória que aponta para o campo da estrutura do infotype."
+    DATA: lw_0015 TYPE p0015,                       "Cria uma variável do tipo do infotype."
+          lv_date TYPE datum.                       "Cria uma variável do tipo data."
+    ASSIGN ('(MP001500)p0015-begda') to <fs_begda>. "Associa o campo da estrutura ao espaço na memória."
+  ENDIF.
+
+  CALL FUNCTION 'HR_MX_GET_PAYROLL_PERIOD' "função para buscar a data na tabela t549q a partir da payroll area do funcionario"
+    EXPORTING
+      payroll_area = ipsyst-abkrs
+      date = sy-datum
+    IMPORTING
+      period_begin = lv_date
+    EXCEPTIONS
+      t549a_error = 1
+      t549q_error = 2.
+
+  IF sy-subrc = 0.        "Se a instrução correr devidamente."
+    <fs_begda> = lv_date. "A estrutura recebe o valor da data retornado."
+  ENDIF.
+
+endmethod.

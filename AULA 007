@@ -1,0 +1,40 @@
+//------------------------------------------
+
+Utilizando Enhancement Points.
+
+1. Acesse a Transação SE38.
+2. Preencha o campo com o nome do programa MP000140.
+3. Acesse a Barra de Menu>>Edit>>Enhancement Operations>>Show Implicit Enhancement Options.
+4. Observar que os Enhancement Points foram demarcados com uma linha.
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""$"$\SE:(1) Form INIT_P0001, Start  
+
+5. Clique em Enhance (Ícone com um Redemoinho).
+6. Escolha a opção Create.
+7. Preencha os campos com as informações do Enhancement.
+8. Um novo bloco de código será aberto para o Enhancemente.
+9. Insira o Código...
+
+ENHANCEMENT 1  ZHR_PA_INIT_P0001_ABKRS.    "inactive version
+
+  IF p0001-btrtl IS INITIAL AND "Se o campo da Subarea estiver vazio...
+     pspar-plans IS NOT INITIAL AND "...e se o campo Position não estiver vazio...
+     pspar-plans NE '999999999'. "e se for diferente de '999999999'...
+      
+      "Seleciona o dado na tabela do Infotype 1008...
+      "insere ao campo p0001-btrtl do Infotype 0001...
+      "conforme condições estabelecidas.
+      
+      SELECT SINGLE btrtl FROM hrp1008 
+        INTO p0001-btrtl 
+        WHERE plvar = '01' AND 
+        otype = 'S' AND 
+        objid = pspar-plans AND
+        subty = space AND
+        istat = '1' AND
+        begda <= pspar-begda AND
+        endda >= pspar-begda.
+    
+  ENDIF.
+
+10. Ative o Enhancement.

@@ -1,0 +1,25 @@
+"----------------------------------------------------------------------------------------------------------------------------------------------------
+FUNCTION zcsk_parallel_table_update.
+*"----------------------------------------------------------------------
+*"*"Local Interface:
+*"  EXPORTING
+*"     REFERENCE(LV_RESULT) TYPE  FLAG
+*"  CHANGING
+*"     REFERENCE(DATA) TYPE  ZZCSK_EMP
+*"----------------------------------------------------------------------
+DATA: wa_data TYPE zzcsk_emp. "Local Structure Type Table: Employee Details"
+
+LOOP AT data INTO wa_data. "Loop at Table: Employee Details"
+
+  MODIFY zzcsk_emp FROM wa_data. "Modify Table: Employee Details from Local Structure"
+
+ENDLOOP.
+
+IF sy-subrc = 0. "If the Table is modified..."
+
+  lv_result = abap_true. "Return validation True"
+
+ENDIF.
+
+ENDFUNCTION.
+"----------------------------------------------------------------------------------------------------------------------------------------------------

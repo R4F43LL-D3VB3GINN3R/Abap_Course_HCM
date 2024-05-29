@@ -1,56 +1,3 @@
-"----------------------------------------------------------------------------------------------------------------------------------------------------
-FUNCTION zcsk_parallel_table_update.
-*"----------------------------------------------------------------------
-*"*"Local Interface:
-*"  EXPORTING
-*"     REFERENCE(LV_RESULT) TYPE  FLAG
-*"  CHANGING
-*"     REFERENCE(DATA) TYPE  ZZCSK_EMP
-*"----------------------------------------------------------------------
-DATA: wa_data TYPE zzcsk_emp. "Local Structure Type Table: Employee Details"
-
-LOOP AT data INTO wa_data. "Loop at Table: Employee Details"
-
-  MODIFY zzcsk_emp FROM wa_data. "Modify Table: Employee Details from Local Structure"
-
-ENDLOOP.
-
-IF sy-subrc = 0. "If the Table is modified..."
-
-  lv_result = abap_true. "Return validation True"
-
-ENDIF.
-
-ENDFUNCTION.
-"----------------------------------------------------------------------------------------------------------------------------------------------------
-*&---------------------------------------------------------------------*
-*& Report Z_HCM_TEST7_NOPP
-*&---------------------------------------------------------------------*
-*&
-*&---------------------------------------------------------------------*
-REPORT z_hcm_test7_nopp.
-
-DATA: wa_data TYPE zzcsk_emp,
-      it_data TYPE TABLE OF zzcsk_emp,
-      lv_result TYPE flag.
-
-DO 2000 TIMES.
-
-  wa_data-mandt = sy-mandt.
-  wa_data-field1 = sy-index.
-
-  APPEND wa_data TO it_data. "Append to internal table instead of loop
-
-  CLEAR wa_data.
-
-ENDDO.
-
-LOOP AT it_data INTO wa_data. "Loop at Table: Employee Details"
-
-    MODIFY zzcsk_emp FROM wa_data. "Modify Table: Employee Details from Local Structure"
-
-ENDLOOP.
-"----------------------------------------------------------------------------------------------------------------------------------------------------
 *&---------------------------------------------------------------------*
 *& Report Z_HCM_TEST7_PP
 *&---------------------------------------------------------------------*
@@ -103,6 +50,8 @@ CALL FUNCTION 'spbt_initialize'
     cant_init_different_pbt_groups = 6
     OTHERS                         = 7.
 
+"Pass2: According to available WP, we divide our data to be processed
+
 IF sy-subrc = 0. "If work processes are available...
 
   lv_occupied = lv_total - lv_available.
@@ -120,6 +69,8 @@ IF sy-subrc = 0. "If work processes are available...
     ENDIF.
   ENDIF.
 ENDIF.
+
+"Pass3: We Prepare the data"
 
 DO 1000 TIMES.
 
@@ -163,6 +114,8 @@ DO lv_split TIMES.
     DELETE it_data_temp FROM lv_end.
   ENDIF.
 
+  "Pass4: Execution of the Main Function in parallel"
+
   CALL FUNCTION 'zcsk_parallel_table_update'
   STARTING NEW TASK lv_task
   DESTINATION IN GROUP lv_appsvr
@@ -200,4 +153,3 @@ FORM update_status USING lv_task.
   WRITE: / lv_result_string.
 
 ENDFORM.
-"----------------------------------------------------------------------------------------------------------------------------------------------------
